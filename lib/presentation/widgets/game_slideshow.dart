@@ -6,10 +6,10 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:smart_games/domain/entities/game.dart';
 
-class DrinksSlideShow extends StatelessWidget {
+class GameSlideShow extends StatelessWidget {
   final List<Game> games;
 
-  const DrinksSlideShow({super.key, required this.games});
+  const GameSlideShow({super.key, required this.games});
 
   @override
   Widget build(BuildContext context) {

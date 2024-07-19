@@ -7,13 +7,13 @@ class GamesResponse {
     final int? count;
     final String? next;
     final dynamic previous;
-    final List<Game>? results;
+    final List<Game> results;
 
     GamesResponse({
         this.count,
         this.next,
         this.previous,
-        this.results,
+        required this.results,
     });
 
     factory GamesResponse.fromJson(Map<String, dynamic> json) => GamesResponse(
@@ -27,7 +27,7 @@ class GamesResponse {
         "count": count,
         "next": next,
         "previous": previous,
-        "results": results == null ? [] : List<dynamic>.from(results!.map((x) => x.toJson())),
+        "results": List<dynamic>.from(results.map((x) => x.toJson())),
     };
 }
 

@@ -20,18 +20,20 @@ class GamesDatasourceImpl extends GamesDatasource  {
   @override
   Future<List<Game>> getGames() async {
     try {
-      final response = await dio.get('/games?key=${Environment.apiKey}',  options: Options(headers: {
-          "Content-Type": "application/json",
-          // "Authorization":
-          //     "Bearer $token",
-        }));
+      final response = await dio.get('/games',  
+        queryParameters: {
+          "key": Environment.apiKey
+        },
+        options: Options(headers: {
+            "Content-Type": "application/json",
+            // "Authorization": "Bearer $token",
+        })
+      );
 
       if(response.statusCode == 200) {
-        print(response.data);
         final gamesResponse = GamesResponse.fromJson(response.data);
-        // final List<Game> games = gamesResponse.results;
-      
-        // return games;
+        final List<Game> games = gamesResponse.results;
+        return games;
       }
 
       return [];
