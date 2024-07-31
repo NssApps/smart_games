@@ -1,11 +1,12 @@
 
-
+import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_games/domain/entities/game.dart';
 import 'package:smart_games/presentation/providers/games/games_provider.dart';
+import 'package:smart_games/presentation/providers/games/latest_games_provider.dart';
+import 'package:smart_games/presentation/providers/games/most_pupular_games_provider.dart';
 import 'package:smart_games/presentation/widgets/game_slideshow.dart';
 import 'package:smart_games/presentation/widgets/horizontal_listview.dart';
 
@@ -23,11 +24,15 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     // TODO: implement initState
     super.initState();
     ref.read(gamesProvider.notifier).getGames();
+    ref.read(latestGamesProvider.notifier).getLatestGames();
+    ref.read(mostPoplarGamesProvider.notifier).getMostPopularGames();
 
   }
   @override
   Widget build(BuildContext context) {
     final List<Game> games = ref.watch(gamesProvider);
+    final List<Game> latestGames = ref.watch(latestGamesProvider);
+    final List<Game> mostPopularGames = ref.watch(mostPoplarGamesProvider);
 
     if(games.isEmpty) {
       return const Scaffold(
@@ -39,63 +44,32 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
       child: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           const CupertinoSliverNavigationBar(
+            heroTag: 'home',
             largeTitle: Text('Home', style: TextStyle(color: Colors.white),),
           ),
         ],
         body: CustomScrollView(
           slivers: [
 
-            SliverToBoxAdapter(
-              child: GameSlideShow(games: games),
-            ),
-
-    //         SliverGrid.builder(
-              
-    //       itemCount: games.length,
-    //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), 
-    //       itemBuilder: (context, index) {
-    //       final Game game = games[index];
-    //             // return IngredientCard(ingredient: ingredient);
-    //             return FadeInUp(
-    //   child: GestureDetector(
-    //     onTap: () => null,
-    //     child: ClipRRect(
-    //       borderRadius: BorderRadius.circular(20),
-    //       child: Image.network(
-    //         game.backgroundImage ?? 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
-
-    //         fit: BoxFit.cover,
-    //         loadingBuilder: (context, child, loadingProgress) {
-    //           if(loadingProgress != null) {
-    //             return const DecoratedBox(
-    //               decoration: BoxDecoration(color: Colors.black12),
-    //             );
-    //           }
-              
-    //           return FadeIn(child: child);
-    //         },
-    //       ),
-    //     ),
-    //   ),
-    // );
-    //       },),
+            // SliverToBoxAdapter(
+            //   child: GameSlideShow(games: games),
+            // ),
 
 
-          SliverToBoxAdapter(
-            child: GameHorizontalListview(
-              title: 'Most Popular',
-              games: games),
-          ),
 
-          SliverToBoxAdapter(
-            child: GameHorizontalListview(
-              title: 'Latest Game',
-              games: games),
-          )
+
+          // SliverToBoxAdapter(
+          //   child: GameHorizontalListview(
+          //     title: 'Most Popular',
+          //     games: mostPopularGames),
+          // ),
+
+          // SliverToBoxAdapter(
+          //   child: GameHorizontalListview(
+          //     title: 'Latest Game',
+          //     games: latestGames),
+          // )
             
-
-
-
           ],
         )
       )

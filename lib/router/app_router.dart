@@ -1,6 +1,7 @@
 
 
 import 'package:go_router/go_router.dart';
+import 'package:smart_games/presentation/screens/games/show_game.dart';
 import 'package:smart_games/presentation/screens/tabs/tabs_screen.dart';
 
 final appRouter = GoRouter(
@@ -24,14 +25,14 @@ final appRouter = GoRouter(
     //       return ShowImageScreen(imageId: imageId);
     //     },
     // ),
-    // GoRoute(
-    //   path: '/videos/:id',
-    //   name: 'videos',
-    //       builder: (context, state) {
-    //       final String videoId = state.pathParameters['id'] ?? 'no-id';
-    //       return ShowVideoScreen(videoId: videoId);
-    //     },
-    // ),
+    GoRoute(
+      path: '/games/:id',
+      name: 'games',
+          builder: (context, state) {
+          final String gameId = state.pathParameters['id'] ?? 'no-id';
+          return ShowGameScreen(gameId: gameId);
+        },
+    ),
 
     // GoRoute(
     //   path: '/drinks/ingredients/:name',

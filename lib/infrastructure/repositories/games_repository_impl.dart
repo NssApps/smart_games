@@ -18,4 +18,14 @@ class GamesRepositoryImpl extends GamesRepository  {
   Future<List<Game>> getGames() {
     return datasource.getGames();
   }
+  
+  @override
+  Future<List<Game>> getLatestGames() {
+    return datasource.getLatestGames();
+  }
+  
+  @override
+  Future<List<Game>> getMostPopularGames() {
+    return datasource.getMostPopularGames();
+  }
 }

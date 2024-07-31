@@ -14,10 +14,11 @@ class TabsSreen extends ConsumerWidget {
     final selectedIndex = ref.watch(tabsSelectedIndexProvider);
   
     const views = <Widget> [
-      HomeScreen(),
+      // HomeScreen(),
+      Placeholder(),
       GamesScreen(),
-      GamesScreen(),
-      GamesScreen(),
+      Placeholder(),
+      Placeholder(),
     ];
 
     return Scaffold(
