@@ -1,35 +1,33 @@
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_games/domain/entities/game.dart';
+import 'package:smart_games/domain/repositories/games_repository.dart';
+import 'package:smart_games/infrastructure/datasources/games_datasource_impl.dart';
+import 'package:smart_games/infrastructure/errors/custom_error.dart';
+import 'package:smart_games/infrastructure/repositories/games_repository_impl.dart';
 
-final drinkProvider = StateNotifierProvider.autoDispose<DrinkNotifier, DrinkState>((ref) {
-  final drinksRepository = DrinksRepositoryImpl(datasource: DrinksDatasourceImpl());
-  return DrinkNotifier(drinksRepository: drinksRepository);
+final gameProvider = StateNotifierProvider.autoDispose<GameNotifier, GameState>((ref) {
+  final gamesRepository = GamesRepositoryImpl(datasource: GamesDatasourceImpl());
+  return GameNotifier(gamesRepository: gamesRepository);
 });
 
-class DrinkNotifier extends StateNotifier<DrinkState> {
-  final DrinksRepository drinksRepository;
-  bool isLoading;
+class GameNotifier extends StateNotifier<GameState> {
+  final GamesRepository gamesRepository;
 
-  DrinkNotifier({
-    required this.drinksRepository,
-    this.isLoading = false,
-  }): super( DrinkState() );
+  GameNotifier({
+    required this.gamesRepository,
+  }): super( GameState() );
 
-  Future<void>  getDrink(String drinkId) async {
+  Future<void> getGame(String gameId) async {
     try {
-      isLoading = true;
-      final Drink drink = await drinksRepository.getDrinkById(drinkId);
+      final Game game = await gamesRepository.getGame(gameId);
 
       state = state.copyWith(
-        drink: drink,
+        game: game,
         errorMessage: ''
       );
 
-      isLoading = false;
-
-      
-      
     } on CustomError catch(e)  {
      // print(e.errorMessage);
       throw Exception();
@@ -40,31 +38,25 @@ class DrinkNotifier extends StateNotifier<DrinkState> {
     }
   }
 
-  Future<List<Drink>> getDrinksByCategory(String categoryName) async {
-    final List<Drink> drinks = await drinksRepository.getDrinksByCategory(categoryName);
-
-    return drinks;
-  }
-
 }
 
 
-class DrinkState {
-  final Drink? drink;
+class GameState {
+  final Game? game;
   final String errorMessage;
   final bool isLoading;
 
-  DrinkState({
-    this.drink, 
+  GameState({
+    this.game, 
     this.errorMessage = '',
     this.isLoading = false,
   });
 
-  DrinkState copyWith({
-    Drink? drink,
+  GameState copyWith({
+    Game? game,
     String? errorMessage
-  }) => DrinkState(
-    drink: drink ?? this.drink,
+  }) => GameState(
+    game: game ?? this.game,
     errorMessage: errorMessage ?? this.errorMessage,
   );
   

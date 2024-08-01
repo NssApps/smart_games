@@ -1,7 +1,9 @@
 
 // import 'package:smart_games/domain/entities/genre.dart';
 // import 'package:smart_games/domain/entities/platform_element.dart';
+import 'package:smart_games/domain/entities/developer.dart';
 import 'package:smart_games/domain/entities/rating.dart';
+import 'package:smart_games/domain/entities/tag.dart';
 
 
 class Game {
@@ -51,7 +53,7 @@ class Game {
     // final List<Store>? stores;
     final List<Developer>? developers;
     final List<Developer>? genres;
-    final List<Developer>? tags;
+    final List<Tag>? tags;
     final List<Developer>? publishers;
     final EsrbRating? esrbRating;
     final dynamic clip;
@@ -138,7 +140,7 @@ class Game {
         // stores: json["stores"] == null ? [] : List<Store>.from(json["stores"]!.map((x) => Store.fromJson(x))),
         developers: json["developers"] == null ? [] : List<Developer>.from(json["developers"]!.map((x) => Developer.fromJson(x))),
         genres: json["genres"] == null ? [] : List<Developer>.from(json["genres"]!.map((x) => Developer.fromJson(x))),
-        tags: json["tags"] == null ? [] : List<Developer>.from(json["tags"]!.map((x) => Developer.fromJson(x))),
+        tags: json["tags"] == null ? [] : List<Tag>.from(json["tags"]!.map((x) => Tag.fromJson(x))),
         publishers: json["publishers"] == null ? [] : List<Developer>.from(json["publishers"]!.map((x) => Developer.fromJson(x))),
         esrbRating: json["esrb_rating"] == null ? null : EsrbRating.fromJson(json["esrb_rating"]),
         clip: json["clip"],
@@ -226,43 +228,7 @@ class AddedByStatus {
     };
 }
 
-class Developer {
-    final int? id;
-    final String? name;
-    final String? slug;
-    final int? gamesCount;
-    final String? imageBackground;
-    final String? domain;
-    final Language? language;
 
-    Developer({
-        this.id,
-        this.name,
-        this.slug,
-        this.gamesCount,
-        this.imageBackground,
-        this.domain,
-        this.language,
-    });
-
-    factory Developer.fromJson(Map<String, dynamic> json) => Developer(
-        id: json["id"],
-        name: json["name"],
-        slug: json["slug"],
-        gamesCount: json["games_count"],
-        imageBackground: json["image_background"],
-        domain: json["domain"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "slug": slug,
-        "games_count": gamesCount,
-        "image_background": imageBackground,
-        "domain": domain,
-    };
-}
 
 enum Language {
     ENG

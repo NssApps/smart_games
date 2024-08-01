@@ -3,7 +3,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_games/config/helpers/human_format.dart';
 import 'package:smart_games/domain/entities/game.dart';
+import 'package:smart_games/presentation/providers/games/game_provider.dart';
+import 'package:smart_games/presentation/widgets/additional_image.dart';
+import 'package:smart_games/presentation/widgets/developers_list.dart';
+import 'package:smart_games/presentation/widgets/rating_list.dart';
+import 'package:smart_games/presentation/widgets/tags_list.dart';
+import 'package:smart_games/presentation/widgets/custom_sliver_appbar.dart';
 
 
 class ShowGameScreen extends ConsumerStatefulWidget {
@@ -21,6 +28,7 @@ class _ShowGameScreenState extends ConsumerState<ShowGameScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    ref.read(gameProvider.notifier).getGame(widget.gameId);
 
 
 
@@ -28,8 +36,9 @@ class _ShowGameScreenState extends ConsumerState<ShowGameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Game? game = ref.watch(drinkProvider).drink;
-
+    final Game? game = ref.watch(gameProvider).game;
+    final textStyles = Theme.of(context).textTheme;
+    final themeColors = Theme.of(context).colorScheme;
     
     return Scaffold(
       body: 
@@ -39,58 +48,76 @@ class _ShowGameScreenState extends ConsumerState<ShowGameScreen> {
         CustomScrollView(
           slivers: [
             CustomSliverAppbar(
-              title: drink.strDrink!, 
-            background: Image.network(drink.strDrinkThumb!, fit: BoxFit.fill,),
-            actions: [
-              IconButton.filled(
-                // color: Colors.amber,
-                style: IconButton.styleFrom(
-                  backgroundColor: Colors.black45,
-                ),
-                onPressed: () async {
-                  // ref.read(localStorageRepositoryProvider).toggleFavorite(drink);
-
-                  await ref.read(favoriteDrinksProvider.notifier).toggleFavorite(drink);
-
-                  // Invalida el provider y lo regresa a su estado original
-                  ref.invalidate(isFavoriteProvider(drink.idDrink));
-
-
-                }, icon: ref.watch(isFavoriteProvider(drink.idDrink)).when(
-                  loading: () => const CircularProgressIndicator(),
-                  data: (isFavorite) => isFavorite
-                  ? const Icon(Icons.favorite, color: Colors.red,)
-                  :  
-                  const Icon(Icons.favorite),
-                  error: (_, __) => throw UnimplementedError()
-                )
-                
-                
-                //  Icon(Icons.favorite)
-              )
-            ],
+              title: game.name ?? 'Name not available', 
+            background: Image.network(game.backgroundImage!, fit: BoxFit.cover,),
+            customWidget: SizedBox(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Colors.yellow.shade800,
+                  ),
+                  const SizedBox(
+                    width: 3,
+                  ),
+                  if(game.rating != null)
+                    Text(
+                      HumanFormats.number(game.rating!.toDouble(), 1),
+                      style: textStyles.bodyMedium
+                          ?.copyWith(color: Colors.yellow.shade800),
+                    ),
+                ],
+              ),
+            ),
           ),
 
-          SliverToBoxAdapter(
-            child: _DrinkAbout(drink: drink,),
+          SliverPadding(
+            padding: const EdgeInsets.all(15),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TagsList(tags: game.tags ?? []),
+
+                  const SizedBox(height: 20,),
+
+                  game.backgroundImageAdditional != null ?
+                    AdditionalImage(url: game.backgroundImageAdditional!)
+                  : const SizedBox(),
+
+                  const SizedBox(height: 20,),
+
+                  Text('Ratings', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
+                  Card(child: RatingList(ratings: game.ratings ?? [])),
+
+                  const SizedBox(height: 20,),
+      
+                  Text('Description', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
+                  const SizedBox(height: 5,),
+                  Text(game.descriptionRaw ?? 'Description not available'),
+
+                  const SizedBox(height: 20,),
+
+                  Text('Developers', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
+                  Text('data'),
+                  DevelopersList(developers: game.developers ?? []),
+
+                  
+          
+
+
+
+
+                ],
+              ),
+            ),
           ),
 
-          const SliverToBoxAdapter(child:  SizedBox(height: 10,)),
-
-          SliverToBoxAdapter(child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(drink.strInstructions ?? ''),
-          )),
-
-
-          const SliverToBoxAdapter(child:  SizedBox(height: 10,)),
-
-          SliverToBoxAdapter(child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text('Ingredients', style: textTheme.titleLarge,),
-          )),
-
-          _IngredientsList(ingredients: drink.ingredients ?? [],),
+    
+         
+       
+        
 
           const SliverToBoxAdapter(child:  SizedBox(height: 10,)),
 

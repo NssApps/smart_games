@@ -12,38 +12,22 @@ class GamesDatasourceImpl extends GamesDatasource  {
   ));
 
   @override
-  Future<Game> getGame(String eventId) {
+  Future<Game> getGame(String gameId) async {
     try {
       // final token = await keyValueSrorageService.getValue<String>('token');
-      final response = await dio.get('/lookup.php?i=$drinkId',  options: Options(headers: {
+      final response = await dio.get('/games/$gameId',  
+        queryParameters: {
+          "key": Environment.apiKey,
+        },
+        options: Options(headers: {
           "Content-Type": "application/json",
           // "Authorization":
           //     "Bearer $token",
         }));
 
       if(response.statusCode == 200) {
-        final Drink drink = DrinkMapper.drinkToEntity(response.data['drinks'][0]);
-        List<Ingredient> ingredients = [];
-
-        for (var i = 0; i < 15; i++) {
-          if(response.data['drinks'][0]['strIngredient${i + 1}'] != null) {
-            ingredients.add(
-              Ingredient(
-                idIngredient: '0', 
-                strIngredient: response.data['drinks'][0]['strIngredient${i + 1}'],
-                measure: response.data['drinks'][0]['strMeasure${i + 1}'],
-                imageUrlSmall: 'https://www.thecocktaildb.com/images/ingredients/${response.data['drinks'][0]['strIngredient${i + 1}']}-Small.png'
-              )
-            );
-
-          } else {
-            break;
-          } 
-        }
-
-        drink.ingredients = ingredients;
-
-        return drink;
+        final Game game = Game.fromJson(response.data);
+        return game;
       }
 
       throw Exception();

@@ -78,10 +78,6 @@ class GamesScreenState extends ConsumerState<GamesScreen> {
                   ),
                 );
                 },),
-
-
-
-            
           ],
         )
       )

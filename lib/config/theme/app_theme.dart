@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 // Color primaryColor = const Color.fromARGB(255, 252, 39, 39);
@@ -17,7 +17,8 @@ class AppTheme {
     useMaterial3: true,
     // primaryColor: primaryColor,
     brightness: Brightness.dark,
-    // colorSchemeSeed: colors[0],
+    colorSchemeSeed: Colors.green,
+    // primaryColor: Colors.green
   
     // appBarTheme: const AppBarTheme(
     //   // backgroundColor: Colors.black87,
