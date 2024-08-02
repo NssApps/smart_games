@@ -3,6 +3,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:smart_games/presentation/screens/games/show_game.dart';
 import 'package:smart_games/presentation/screens/tabs/tabs_screen.dart';
+import 'package:smart_games/presentation/screens/web_viewer/web_viewer_screen.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/tabs',
@@ -31,6 +32,16 @@ final appRouter = GoRouter(
           builder: (context, state) {
           final String gameId = state.pathParameters['id'] ?? 'no-id';
           return ShowGameScreen(gameId: gameId);
+        },
+    ),
+
+    GoRoute(
+      path: '/webViewer/:url/:name',
+      name: 'webViewer',
+      builder: (context, state) {
+          final String url = state.pathParameters['url'] ?? 'no-id';
+          final String storeName = state.pathParameters['name'] ?? 'no-id';
+          return WebViewerScreen(url: url, title: storeName);
         },
     ),
 

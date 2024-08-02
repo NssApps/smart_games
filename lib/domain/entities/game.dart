@@ -4,6 +4,7 @@
 import 'package:smart_games/domain/entities/developer.dart';
 import 'package:smart_games/domain/entities/rating.dart';
 import 'package:smart_games/domain/entities/tag.dart';
+import 'package:smart_games/infrastructure/models/store_model.dart';
 
 
 class Game {
@@ -20,26 +21,16 @@ class Game {
     final double? rating;
     final int? ratingTop;
     final List<Rating>? ratings;
-    // final Map<String, int>? reactions;
-    // final int? added;
-    // final AddedByStatus? addedByStatus;
     final int? playtime;
     final int? screenshotsCount;
     final int? moviesCount;
     final int? creatorsCount;
     final int? achievementsCount;
     final int? parentAchievementsCount;
-    // final String? redditUrl;
-    // final String? redditName;
-    // final String? redditDescription;
-    // final String? redditLogo;
-    // final int? redditCount;
-    // final int? twitchCount;
     final int? youtubeCount;
     final int? reviewsTextCount;
     final int? ratingsCount;
     final int? suggestionsCount;
-    // final List<String>? alternativeNames;
     final String? metacriticUrl;
     final int? parentsCount;
     final int? additionsCount;
@@ -50,7 +41,7 @@ class Game {
     final String? dominantColor;
     final List<ParentPlatform>? parentPlatforms;
     final List<PlatformElement>? platforms;
-    // final List<Store>? stores;
+    final List<StoreModel>? storeModels;
     final List<Developer>? developers;
     final List<Developer>? genres;
     final List<Tag>? tags;
@@ -93,7 +84,7 @@ class Game {
         this.dominantColor,
         this.parentPlatforms,
         this.platforms,
-        // this.stores,
+        this.storeModels,
         this.developers,
         this.genres,
         this.tags,
@@ -137,7 +128,7 @@ class Game {
         dominantColor: json["dominant_color"],
         parentPlatforms: json["parent_platforms"] == null ? [] : List<ParentPlatform>.from(json["parent_platforms"]!.map((x) => ParentPlatform.fromJson(x))),
         platforms: json["platforms"] == null ? [] : List<PlatformElement>.from(json["platforms"]!.map((x) => PlatformElement.fromJson(x))),
-        // stores: json["stores"] == null ? [] : List<Store>.from(json["stores"]!.map((x) => Store.fromJson(x))),
+        storeModels: json["stores"] == null ? [] : List<StoreModel>.from(json["stores"]!.map((x) => StoreModel.fromJson(x))),
         developers: json["developers"] == null ? [] : List<Developer>.from(json["developers"]!.map((x) => Developer.fromJson(x))),
         genres: json["genres"] == null ? [] : List<Developer>.from(json["genres"]!.map((x) => Developer.fromJson(x))),
         tags: json["tags"] == null ? [] : List<Tag>.from(json["tags"]!.map((x) => Tag.fromJson(x))),
@@ -181,7 +172,7 @@ class Game {
         "dominant_color": dominantColor,
         "parent_platforms": parentPlatforms == null ? [] : List<dynamic>.from(parentPlatforms!.map((x) => x.toJson())),
         "platforms": platforms == null ? [] : List<dynamic>.from(platforms!.map((x) => x.toJson())),
-        // "stores": stores == null ? [] : List<dynamic>.from(stores!.map((x) => x.toJson())),
+        // "stores": storeModels == null ? [] : List<StoreModel>.from(storeModels!.map((x) => x.toJson())),
         "developers": developers == null ? [] : List<dynamic>.from(developers!.map((x) => x.toJson())),
         "genres": genres == null ? [] : List<dynamic>.from(genres!.map((x) => x.toJson())),
         "tags": tags == null ? [] : List<dynamic>.from(tags!.map((x) => x.toJson())),

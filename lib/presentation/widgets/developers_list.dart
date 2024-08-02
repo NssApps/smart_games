@@ -10,21 +10,26 @@ class DevelopersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+    return SliverList.separated(
       itemCount: developers.length,
       itemBuilder: (context, index) {
         final developer = developers[index];
         return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage (
-              developer.imageBackground ?? 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',            
-            ),
-          ),
           title: Text(developer.name ?? ''),
-          subtitle: Text('Games count: ${developer.gamesCount ?? 0}'),
-        );
-    },);
+          leading: CircleAvatar(
+              backgroundImage: NetworkImage (
+                developer.imageBackground ?? 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',            
+              ),
+            ),
+          onTap: () {
+            // context.push('/courses/sections/${course.sections[index].id}');
+          },
+          trailing: const Icon(Icons.chevron_right_outlined),
+          );
+      }, separatorBuilder: (BuildContext context, int index) { return const Divider(height: 1,); },
+    );
+
+
+
   }
 }

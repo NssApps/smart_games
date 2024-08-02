@@ -1,6 +1,4 @@
 
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_games/config/helpers/human_format.dart';
@@ -9,9 +7,9 @@ import 'package:smart_games/presentation/providers/games/game_provider.dart';
 import 'package:smart_games/presentation/widgets/additional_image.dart';
 import 'package:smart_games/presentation/widgets/developers_list.dart';
 import 'package:smart_games/presentation/widgets/rating_list.dart';
+import 'package:smart_games/presentation/widgets/stores_list.dart';
 import 'package:smart_games/presentation/widgets/tags_list.dart';
 import 'package:smart_games/presentation/widgets/custom_sliver_appbar.dart';
-
 
 class ShowGameScreen extends ConsumerStatefulWidget {
   final String gameId;
@@ -29,9 +27,6 @@ class _ShowGameScreenState extends ConsumerState<ShowGameScreen> {
     // TODO: implement initState
     super.initState();
     ref.read(gameProvider.notifier).getGame(widget.gameId);
-
-
-
   }
 
   @override
@@ -77,6 +72,7 @@ class _ShowGameScreenState extends ConsumerState<ShowGameScreen> {
             sliver: SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   TagsList(tags: game.tags ?? []),
 
@@ -99,32 +95,24 @@ class _ShowGameScreenState extends ConsumerState<ShowGameScreen> {
 
                   const SizedBox(height: 20,),
 
+                  Text('Stores', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
+                  StoresList(stores: game.storeModels ?? []),
+
                   Text('Developers', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
-                  const Text('data'),
-                  DevelopersList(developers: game.developers ?? []),
-
-                  
-          
-
-
-
-
+    
                 ],
               ),
             ),
           ),
 
+          
+          DevelopersList(developers: game.developers ?? []),
+
+          const SliverToBoxAdapter(child: const SizedBox(height: 50,),)
     
          
        
-        
-
-          const SliverToBoxAdapter(child:  SizedBox(height: 10,)),
-
-          // SliverToBoxAdapter(child: HorizontalListView(drinks: drinksByCategory, title: 'Drinks with xxxxxx',)),
-
-          const SliverToBoxAdapter(child:  SizedBox(height: 50,)),
-
+ 
 
         ],
       )
