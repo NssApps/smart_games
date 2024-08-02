@@ -2,11 +2,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_games/config/helpers/human_format.dart';
+import 'package:smart_games/domain/entities/achievement.dart';
 import 'package:smart_games/domain/entities/game.dart';
+import 'package:smart_games/domain/entities/screenshot.dart';
+import 'package:smart_games/presentation/providers/games/achievements_provider.dart';
 import 'package:smart_games/presentation/providers/games/game_provider.dart';
+import 'package:smart_games/presentation/providers/games/screenshots_provider.dart';
 import 'package:smart_games/presentation/widgets/additional_image.dart';
+import 'package:smart_games/presentation/widgets/ahievements_list.dart';
 import 'package:smart_games/presentation/widgets/developers_list.dart';
 import 'package:smart_games/presentation/widgets/rating_list.dart';
+import 'package:smart_games/presentation/widgets/screenshots_list.dart';
 import 'package:smart_games/presentation/widgets/stores_list.dart';
 import 'package:smart_games/presentation/widgets/tags_list.dart';
 import 'package:smart_games/presentation/widgets/custom_sliver_appbar.dart';
@@ -27,11 +33,15 @@ class _ShowGameScreenState extends ConsumerState<ShowGameScreen> {
     // TODO: implement initState
     super.initState();
     ref.read(gameProvider.notifier).getGame(widget.gameId);
+    ref.read(screenshotsProvider.notifier).getScreenshots(widget.gameId);
+    ref.read(achievementsProvider.notifier).getAchievements(widget.gameId);
   }
 
   @override
   Widget build(BuildContext context) {
     final Game? game = ref.watch(gameProvider).game;
+    final List<Screenshot> screenshots = ref.watch(screenshotsProvider);
+    final List<Achievement> achievements = ref.watch(achievementsProvider);
     final textStyles = Theme.of(context).textTheme;
     final themeColors = Theme.of(context).colorScheme;
     
@@ -98,6 +108,20 @@ class _ShowGameScreenState extends ConsumerState<ShowGameScreen> {
                   Text('Stores', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
                   StoresList(stores: game.storeModels ?? []),
 
+                  const SizedBox(height: 20,),
+
+                  Text('Screenshots', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
+                  ScreenshotsList(screenshots: screenshots),
+
+                  const SizedBox(height: 40,),
+
+                  if(achievements.isNotEmpty ) 
+                    Text('Achievements', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
+                  if(achievements.isNotEmpty ) 
+                    AchievementsList(achievements: achievements),
+
+                  const SizedBox(height: 20,),
+
                   Text('Developers', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
     
                 ],
@@ -108,44 +132,11 @@ class _ShowGameScreenState extends ConsumerState<ShowGameScreen> {
           
           DevelopersList(developers: game.developers ?? []),
 
-          const SliverToBoxAdapter(child: const SizedBox(height: 50,),)
+          const SliverToBoxAdapter(child: SizedBox(height: 50,),)
     
-         
-       
- 
-
         ],
       )
     );
-    
-
-    // return CupertinoPageScaffold(
-    //   child: Stack(
-    //     children: [
-    //       // Background Image
-    //       Positioned.fill(
-    //         child: Image.network(
-    //                 "https://images.pexels.com/photos/27328445/pexels-photo-27328445/free-photo-of-a-couple-holding-hands-in-front-of-a-brick-wall.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    //                 fit: BoxFit.cover,
-    //               )
-    //       ),
-    //       // Cupertino Navigation Bar
-    //       Positioned(
-    //         left: 0,
-    //         right: 0,
-    //         child: CupertinoNavigationBar(
-    //           middle: Text('My Cupertino App'),
-    //           backgroundColor: Colors.transparent,
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
 
   }
 }
-
-
-
-
-

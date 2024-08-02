@@ -1,6 +1,7 @@
 
 
 import 'package:go_router/go_router.dart';
+import 'package:smart_games/presentation/screens/creator/show_creator.dart';
 import 'package:smart_games/presentation/screens/games/show_game.dart';
 import 'package:smart_games/presentation/screens/tabs/tabs_screen.dart';
 import 'package:smart_games/presentation/screens/web_viewer/web_viewer_screen.dart';
@@ -13,26 +14,21 @@ final appRouter = GoRouter(
       name: 'tabs',
       builder: (context, state) => const TabsSreen(),
     ),
-    // GoRoute(
-    //   path: '/home',
-    //   name: 'home',
-    //   builder: (context, state) => const HomeScreen(),
-    // ),
-    // GoRoute(
-    //   path: '/images/:id',
-    //   name: 'images',
-    //       builder: (context, state) {
-    //       final String imageId = state.pathParameters['id'] ?? 'no-id';
-    //       return ShowImageScreen(imageId: imageId);
-    //     },
-    // ),
     GoRoute(
       path: '/games/:id',
       name: 'games',
-          builder: (context, state) {
-          final String gameId = state.pathParameters['id'] ?? 'no-id';
-          return ShowGameScreen(gameId: gameId);
-        },
+        builder: (context, state) {
+        final String gameId = state.pathParameters['id'] ?? 'no-id';
+        return ShowGameScreen(gameId: gameId);
+      },
+    ),
+    GoRoute(
+      path: '/creators/:id',
+      name: 'creators',
+        builder: (context, state) {
+        final String creatorId = state.pathParameters['id'] ?? 'no-id';
+        return ShowCreator(creatorId: creatorId);
+      },
     ),
 
     GoRoute(

@@ -1,7 +1,9 @@
 
 
 import 'package:smart_games/domain/datasources/games_datasource.dart';
+import 'package:smart_games/domain/entities/achievement.dart';
 import 'package:smart_games/domain/entities/game.dart';
+import 'package:smart_games/domain/entities/screenshot.dart';
 import 'package:smart_games/domain/repositories/games_repository.dart';
 
 class GamesRepositoryImpl extends GamesRepository  {
@@ -27,5 +29,15 @@ class GamesRepositoryImpl extends GamesRepository  {
   @override
   Future<List<Game>> getMostPopularGames() {
     return datasource.getMostPopularGames();
+  }
+
+  @override
+  Future<List<Screenshot>> getScreenshots(String gameId) {
+    return datasource.getScreenshots(gameId);
+  }
+
+  @override
+  Future<List<Achievement>> getAchievements(String gameId) {
+    return datasource.getAchievements(gameId);
   }
 }
