@@ -100,7 +100,7 @@ class _ShowGameScreenState extends ConsumerState<ShowGameScreen> {
                   const SizedBox(height: 20,),
 
                   Text('Developers', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
-                  Text('data'),
+                  const Text('data'),
                   DevelopersList(developers: game.developers ?? []),
 
                   
