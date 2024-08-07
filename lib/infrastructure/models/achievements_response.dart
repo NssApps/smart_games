@@ -3,7 +3,7 @@ import 'package:smart_games/domain/entities/achievement.dart';
 
 class AchievementsResponse {
     final int count;
-    final String next;
+    final String? next;
     final dynamic previous;
     final List<Achievement> results;
 

@@ -12,18 +12,18 @@ class PositionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 40,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: positions.length,
-          itemBuilder: (context, index) {
-            final Position position = positions[index];
-            return Padding(
-              padding: const EdgeInsets.all(5),
-              child: PillCard(title: position.name,),
-            );
-          },
-        ),
-      );
+      height: 40,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: positions.length,
+        itemBuilder: (context, index) {
+          final Position position = positions[index];
+          return Padding(
+            padding: const EdgeInsets.all(5),
+            child: PillCard(title: position.name,),
+          );
+        },
+      ),
+    );
   }
 }

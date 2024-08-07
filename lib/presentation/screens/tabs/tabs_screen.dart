@@ -4,6 +4,7 @@ import 'package:smart_games/presentation/providers/tabs/main_tabs_selected_index
 import 'package:smart_games/presentation/screens/creator/creators_screen.dart';
 import 'package:smart_games/presentation/screens/games/games_screen.dart';
 import 'package:smart_games/presentation/screens/home/home_screen.dart';
+import 'package:smart_games/presentation/screens/stores/stores_screen.dart';
 import 'package:smart_games/presentation/widgets/custom_botton_navigationbar.dart';
 
 class TabsSreen extends ConsumerWidget {
@@ -15,12 +16,13 @@ class TabsSreen extends ConsumerWidget {
     final selectedIndex = ref.watch(tabsSelectedIndexProvider);
   
     const views = <Widget> [
-      // HomeScreen(),
-      Placeholder(),
-      // GamesScreen(),
-      Placeholder(),
+      HomeScreen(),
+      // Placeholder(),
+      GamesScreen(),
+      // Placeholder(),
       CreatorsScreen(),
-      Placeholder(),
+      // Placeholder(),
+      StoresScreen()
     ];
 
     return Scaffold(

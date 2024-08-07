@@ -1,24 +1,25 @@
 
-import 'package:smart_games/domain/entities/creator.dart';
 
-class CreatorResponse {
-    final int count;
+import 'package:smart_games/domain/entities/store.dart';
+
+class StoresResponse {
+    final int? count;
     final String? next;
     final dynamic previous;
-    final List<Creator> results;
+    final List<Store> results;
 
-    CreatorResponse({
+    StoresResponse({
         required this.count,
         required this.next,
         required this.previous,
         required this.results,
     });
 
-    factory CreatorResponse.fromJson(Map<String, dynamic> json) => CreatorResponse(
+    factory StoresResponse.fromJson(Map<String, dynamic> json) => StoresResponse(
         count: json["count"],
         next: json["next"],
         previous: json["previous"],
-        results: List<Creator>.from(json["results"].map((x) => Creator.fromJson(x))),
+        results: json["results"] == null ? [] : List<Store>.from(json["results"].map((x) => Store.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {

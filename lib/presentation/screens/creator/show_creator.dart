@@ -83,11 +83,6 @@ class ShowCreatorState extends ConsumerState<ShowCreator> {
             ),
           )
 
-          
-
-
-
-
         ],
       ),
     );

@@ -40,4 +40,9 @@ class GamesRepositoryImpl extends GamesRepository  {
   Future<List<Achievement>> getAchievements(String gameId) {
     return datasource.getAchievements(gameId);
   }
+  
+  @override
+  Future<List<Game>> getMainGames() {
+    return datasource.getMainGames();
+  }
 }

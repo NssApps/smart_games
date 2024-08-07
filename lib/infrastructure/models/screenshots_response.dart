@@ -2,7 +2,7 @@
 import 'package:smart_games/domain/entities/screenshot.dart';
 
 class ScreenshotsResponse {
-    final int count;
+    final int? count;
     final dynamic next;
     final dynamic previous;
     final List<Screenshot> results;

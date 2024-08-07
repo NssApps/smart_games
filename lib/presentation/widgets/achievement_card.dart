@@ -14,7 +14,7 @@ class AchievementCard extends StatelessWidget {
     final textStyles = Theme.of(context).textTheme;
 
     return Container(
-      width: 250,
+      width: 280,
       // height: 200,
       // color: Colors.amber,
       child: Column(

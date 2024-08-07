@@ -76,6 +76,7 @@ class GamesDatasourceImpl extends GamesDatasource  {
       if(response.statusCode == 200) {
         final gamesResponse = GamesResponse.fromJson(response.data);
         final List<Game> games = gamesResponse.results;
+        // print(games);
         return games;
       }
 
@@ -106,7 +107,7 @@ class GamesDatasourceImpl extends GamesDatasource  {
   }
   
   @override
-  Future<List<Game>> getLatestGames() async{
+  Future<List<Game>> getLatestGames() async {
     try {
       final response = await dio.get('/games',  
         queryParameters: {
@@ -146,6 +147,7 @@ class GamesDatasourceImpl extends GamesDatasource  {
 
       throw Exception();
     } catch(e) {
+      print(e.toString());
       throw Exception();
     } 
   }
@@ -156,7 +158,7 @@ class GamesDatasourceImpl extends GamesDatasource  {
       final response = await dio.get('/games',  
         queryParameters: {
           "key": Environment.apiKey,
-          "dates": "2023-01-01,2023-07-01",
+          "dates": "2023-05-01,2023-10-01",
         },
         options: Options(headers: {
             "Content-Type": "application/json",
@@ -279,6 +281,52 @@ class GamesDatasourceImpl extends GamesDatasource  {
 
       throw Exception();
     } catch(e) {
+      throw Exception();
+    } 
+  }
+  
+  @override
+  Future<List<Game>> getMainGames() async {
+    try {
+      final response = await dio.get('/games',  
+        queryParameters: {
+          "key": Environment.apiKey,
+          "dates": "2023-01-01,2023-03-01",
+        },
+        options: Options(headers: {
+            "Content-Type": "application/json",
+            // "Authorization": "Bearer $token",
+        })
+      );
+
+      if(response.statusCode == 200) {
+        final gamesResponse = GamesResponse.fromJson(response.data);
+        final List<Game> games = gamesResponse.results;
+        return games;
+      }
+
+      return [];
+
+      // throw Exception();
+
+    } on DioException catch(e) {
+      // print(e.response?.statusCode);
+      // print(e.response?.data['message']);
+      if(e.response?.statusCode == 403) {
+        throw CustomError(errorMessage:  e.response?.data['message'] ?? 'Credenciales inválidas');
+      }
+
+      if(e.type == DioExceptionType.connectionTimeout) {
+        throw CustomError(errorMessage: 'Connection Timeout');
+      }
+
+      if(e.response?.statusCode == 302) {
+        throw CustomError(errorMessage: 'Unprocessable Content');
+      }
+
+      throw Exception();
+    } catch(e) {
+      print(e.toString());
       throw Exception();
     } 
   }

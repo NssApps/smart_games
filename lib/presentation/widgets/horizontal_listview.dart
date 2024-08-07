@@ -75,7 +75,7 @@ class _MovieHorizontalListviewState extends State<GameHorizontalListview> {
                 child: GestureDetector(
                   child: _Slide(game: widget.games[index]),
                   // se usa push cuando se quiere que se regrese a la pagina
-                  onTap: () => context.push('/movie/${widget.games[index].id}'),
+                  onTap: () => context.push('/games/${widget.games[index].id}'),
                 )
               );
             },

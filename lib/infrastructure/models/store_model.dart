@@ -2,7 +2,7 @@
 import 'package:smart_games/domain/entities/store.dart';
 
 class StoreModel {
-    final int id;
+    final int? id;
     final String? url;
     final Store store;
 
