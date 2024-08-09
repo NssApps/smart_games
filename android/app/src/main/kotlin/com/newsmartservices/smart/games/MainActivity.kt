@@ -1,4 +1,4 @@
-package com.example.smart_games
+package com.newsmartservices.smart.games
 
 import io.flutter.embedding.android.FlutterActivity
 

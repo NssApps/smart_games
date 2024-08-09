@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_games/domain/entities/game.dart';
 import 'package:smart_games/presentation/providers/games/latest_games_provider.dart';
@@ -38,6 +39,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         body: Center(child: CircularProgressIndicator(strokeWidth: 2,),),
       );
     }
+
+    FlutterNativeSplash.remove();
 
     return CupertinoPageScaffold(
       child: NestedScrollView(
