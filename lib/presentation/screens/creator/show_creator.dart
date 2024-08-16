@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smart_games/config/helpers/html_remover.dart';
 import 'package:smart_games/config/helpers/human_format.dart';
 import 'package:smart_games/domain/entities/creator.dart';
 import 'package:smart_games/presentation/providers/creators/creator_provider.dart';
@@ -74,7 +75,7 @@ class ShowCreatorState extends ConsumerState<ShowCreator> {
                   const SizedBox(height: 10,),
                   Text('About ${creator.name}', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
                   const SizedBox(height: 5,),
-                  Text(creator.description ?? 'Description not available'),
+                  Text( HtmlRemover.removeHtmlTags(creator.description ?? 'Description not available') ),
                   const SizedBox(height: 10,),
                   Text('Ratings', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
                   Card(child: RatingList(ratings: creator.ratings ?? [])),

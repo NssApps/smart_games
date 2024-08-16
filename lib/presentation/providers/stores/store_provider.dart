@@ -34,7 +34,7 @@ class StoreNotifier extends StateNotifier<StoreState> {
     } 
     catch(e) {
       //print(e);
-      throw Exception();
+      // throw Exception();
     }
   }
 

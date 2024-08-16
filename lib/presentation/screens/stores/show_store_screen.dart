@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smart_games/config/helpers/html_remover.dart';
 import 'package:smart_games/domain/entities/store.dart';
 import 'package:smart_games/presentation/providers/stores/store_provider.dart';
 import 'package:smart_games/presentation/providers/stores/stores_provider.dart';
@@ -70,7 +71,7 @@ class _ShowStoreScreenState extends ConsumerState<ShowStoreScreen> {
                   const SizedBox(height: 10,),
                   Text('About ${store.name}', style: textStyles.titleLarge!.copyWith(color: themeColors.primary),),
                   const SizedBox(height: 5,),
-                  Text(store.description ?? 'Description not available'),
+                  Text(HtmlRemover.removeHtmlTags(store.description ?? 'Description not available') ),
                   const SizedBox(height: 10,),
                   TextButton.icon(
                     onPressed: () => context.push('/webViewer/${store.domain}/${store.name}'), 

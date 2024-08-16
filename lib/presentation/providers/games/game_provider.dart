@@ -15,7 +15,7 @@ final gameProvider = StateNotifierProvider.autoDispose<GameNotifier, GameState>(
 class GameNotifier extends StateNotifier<GameState> {
   final GamesRepository gamesRepository;
 
-  GameNotifier({
+  GameNotifier({ 
     required this.gamesRepository,
   }): super( GameState() );
 
@@ -34,7 +34,7 @@ class GameNotifier extends StateNotifier<GameState> {
     } 
     catch(e) {
       //print(e);
-      throw Exception();
+      throw Exception(e.toString());
     }
   }
 

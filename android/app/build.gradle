@@ -29,6 +29,7 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+
 android {
     namespace = "com.newsmartservices.smart.games"
     compileSdk = flutter.compileSdkVersion
@@ -58,6 +59,7 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
+
 
     buildTypes {
         release {
